@@ -19,7 +19,7 @@ For this workshop, we will demonstrate how to implement an integrated step-selec
 
 - `two_step_approach.R`: demonstrates how one can easily fit models to multiple individuals and then use a bootstrap for population-level inferences (Signer et al. 2019).  This approach is then compared to a mixed-effect SSA. [Code written by Johannes Signer and John Fieberg]
 
-2. `Otthers_SSF.R": illustrates methods for fitting models to multiple individuals, using random effects to capture among animal variability in their habitat selection parameters (Muff et al. 2021). [Code written by Steffi Muff with minor adjustments made by John Fieberg]
+2. `Otthers_SSF.R`: illustrates methods for fitting models to multiple individuals, using random effects to capture among animal variability in their habitat selection parameters (Muff et al. 2021). [Code written by Steffi Muff with minor adjustments made by John Fieberg]
  
   
 ## Software
