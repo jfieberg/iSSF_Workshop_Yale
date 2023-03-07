@@ -216,11 +216,7 @@ ta_distr(obs_avail)
 #' environmental covariates to each one. We can use the functions
 #' 'extract_covariates()' to attach the raster values to our steps.
 covs <- extract_covariates(obs_avail, hab)
-
-#' Format "cover" as factor
-covs$cover <- factor(covs$cover,
-                     labels = c("grassland", "forest", "wetland"))
-
+ 
 #' Have a look:
 print(covs, n = 3, width = 200)
 
@@ -268,12 +264,14 @@ m1 <- fit_issf(covs2,
 str(m1, 1)
 
 #' Notice that it is a list with 4 elements at the top level.
+#' 
 #'   - $model: the actual fitted model
-#'   - $sl_: the tentative step-length distribution
+#'   - $sl_: the tentative step-length distribution  
 #'   - $ta_: the tentative turn-angle distribution
 #'   - $more: (currently empty) a placeholder for additional information
-
-#' ... model interpretation ----
+#'
+#'
+#' ### Model interpretation 
 
 #' Take a look at the model summary:
 summary(m1)
@@ -286,7 +284,7 @@ summary(m1)
 #'       selection-free movement kernel (none of the sl_ params are significant.)
 #' 4. our tentative turn-angle distribution is different from the estimated
 #'       selection-free movement kernel (cos(ta_) param is significant)
-
+#'
 #' With this simple model structure, we have an 'amt' function that will
 #' automatically update the movement distributions.
 #'
@@ -396,7 +394,8 @@ logRSS <- log_rss(m1, x1 = x1, x2 = x2, ci = "se")
 #' RSS
 exp(logRSS$df[, c("log_rss", "lwr", "upr")])
 
-#' Our animal is ~ 1.5x more likely to step into a habitat with forage = 600
+#' Our animal is ~  `r round(exp(logRSS$df$log_rss), 1)` more 
+#' likely to step into a habitat with forage = 600
 #' than forage = 400.
 #'
 #'
@@ -418,7 +417,8 @@ exp(logRSS$df$log_rss)
 #' Confidence interval
 exp(c(logRSS$df$lwr, logRSS$df$upr))
 
-#' Our animal is about 7.3x more likely to step into a habitat with
+#' Our animal is about`r round(exp(logRSS$df$log_rss), 1)` more likely 
+#' to step into a habitat with
 #' predator = 0 than predator = 5. The 95% CI for that estimate is
 #' ~ 5.9 -- 9.0.
 #'

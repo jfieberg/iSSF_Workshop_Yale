@@ -1528,7 +1528,8 @@ possible (<code>track_xy</code>). We can format our data as a
 <pre class="r"><code>trk &lt;- make_track(gps, x, y, t, crs = 32612)</code></pre>
 <p>We can see the class of the resulting object</p>
 <pre class="r"><code>class(trk)</code></pre>
-<pre><code>## [1] &quot;track_xyt&quot;  &quot;track_xy&quot;   &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<pre><code>## [1] &quot;track_xyt&quot;  &quot;track_xy&quot;   &quot;tbl_df&quot;     &quot;tbl&quot;       
+## [5] &quot;data.frame&quot;</code></pre>
 <p>This is still a tibble and a data.frame, so we can manipulate it just
 like we would manipulate any other tibble or data.frame in R. But we get
 some added benefits from it being a <code>track_xyt</code> object –
@@ -1556,7 +1557,8 @@ representation. We can do that with the function
 # View(stp)</code></pre>
 <p>Note that steps have their own S3 class:</p>
 <pre class="r"><code>class(stp)</code></pre>
-<pre><code>## [1] &quot;steps_xyt&quot;  &quot;steps_xy&quot;   &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<pre><code>## [1] &quot;steps_xyt&quot;  &quot;steps_xy&quot;   &quot;tbl_df&quot;     &quot;tbl&quot;       
+## [5] &quot;data.frame&quot;</code></pre>
 <p>Data cleaning is an important first step whenever you’re working with
 GPS data. Unfortunately, we did not allocate time today to dive into the
 details of data cleaning. We have data cleaning functions in ‘amt’, and
@@ -1625,21 +1627,23 @@ bursts. We can see the switch from burst 1 to burst 2 after our gap at
 10:00. If we pass that to <code>steps()</code>, we now get a
 warning:</p>
 <pre class="r"><code>steps(trk3)</code></pre>
-<pre><code>## Warning in steps.track_xyt(trk3): burst&#39;s are ignored, use steps_by_burst instead.</code></pre>
+<pre><code>## Warning in steps.track_xyt(trk3): burst&#39;s are ignored, use
+## steps_by_burst instead.</code></pre>
 <pre><code>## # A tibble: 2,019 × 10
-##        x1_     x2_      y1_      y2_   sl_ direction_p    ta_ t1_                
-##      &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt;  &lt;dbl&gt; &lt;dttm&gt;             
-##  1 446975  446975  4625975  4626025   50          1.57 NA     2021-02-15 00:00:00
-##  2 446975  446705. 4626025  4626378. 445.         2.22  0.652 2021-02-15 01:00:00
-##  3 446705. 446870. 4626378. 4625955. 454.        -1.20  2.86  2021-02-15 02:00:00
-##  4 446870. 446809. 4625955. 4626028.  95.8        2.27 -2.82  2021-02-15 03:00:00
-##  5 446809. 446667. 4626028. 4626046. 143.         3.02  0.749 2021-02-15 04:00:00
-##  6 446667. 446400. 4626046. 4626390. 435.         2.23 -0.785 2021-02-15 05:00:00
-##  7 446400. 446533. 4626390. 4626811. 442.         1.27 -0.966 2021-02-15 06:00:00
-##  8 446533. 446540. 4626811. 4627013. 202.         1.54  0.270 2021-02-15 07:00:00
-##  9 446540. 446681. 4627013. 4626544. 489.        -1.28 -2.81  2021-02-15 08:00:00
-## 10 446681. 446847. 4626544. 4627126. 605.         1.29  2.57  2021-02-15 10:00:00
-## # … with 2,009 more rows, and 2 more variables: t2_ &lt;dttm&gt;, dt_ &lt;drtn&gt;</code></pre>
+##        x1_     x2_      y1_      y2_   sl_ direction_p    ta_
+##      &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt;  &lt;dbl&gt;
+##  1 446975  446975  4625975  4626025   50          1.57 NA    
+##  2 446975  446705. 4626025  4626378. 445.         2.22  0.652
+##  3 446705. 446870. 4626378. 4625955. 454.        -1.20  2.86 
+##  4 446870. 446809. 4625955. 4626028.  95.8        2.27 -2.82 
+##  5 446809. 446667. 4626028. 4626046. 143.         3.02  0.749
+##  6 446667. 446400. 4626046. 4626390. 435.         2.23 -0.785
+##  7 446400. 446533. 4626390. 4626811. 442.         1.27 -0.966
+##  8 446533. 446540. 4626811. 4627013. 202.         1.54  0.270
+##  9 446540. 446681. 4627013. 4626544. 489.        -1.28 -2.81 
+## 10 446681. 446847. 4626544. 4627126. 605.         1.29  2.57 
+## # … with 2,009 more rows, and 3 more variables: t1_ &lt;dttm&gt;,
+## #   t2_ &lt;dttm&gt;, dt_ &lt;drtn&gt;</code></pre>
 <p>The warning tells us to use <code>steps_by_burst()</code> to make use
 of the new column:</p>
 <pre class="r"><code>stp3 &lt;- steps_by_burst(trk3)
@@ -1701,7 +1705,8 @@ step lengths)</p>
 ## [1,] 0.03329244
 ## 
 ## attr(,&quot;class&quot;)
-## [1] &quot;vonmises_distr&quot; &quot;ta_distr&quot;       &quot;amt_distr&quot;      &quot;list&quot;</code></pre>
+## [1] &quot;vonmises_distr&quot; &quot;ta_distr&quot;       &quot;amt_distr&quot;     
+## [4] &quot;list&quot;</code></pre>
 <p>We can then overlay these on the empirical step-length and turn angle
 distributions to see how well they match.</p>
 <pre class="r"><code>ggplot(stp3, aes(x = sl_)) + 
@@ -1714,7 +1719,8 @@ distributions to see how well they match.</p>
   geom_histogram(aes(y = ..density..), binwidth = 0.2) +
   stat_function(fun =function(x)circular::dvonmises(x, mu = 0, kappa = tadist$params$kappa), 
                 color = &quot;red&quot;, lwd=1.5)</code></pre>
-<pre><code>## Warning: Removed 104 rows containing non-finite values (`stat_bin()`).</code></pre>
+<pre><code>## Warning: Removed 104 rows containing non-finite values
+## (`stat_bin()`).</code></pre>
 <pre><code>## Warning in as.circular(x): an object is coerced to the class &#39;circular&#39; using default value for the following components:
 ##   type: &#39;angles&#39;
 ##   units: &#39;radians&#39;
@@ -1745,8 +1751,8 @@ obs_avail &lt;- random_steps(stp3, n_control = 20)</code></pre>
 <p>Random steps have their own S3 class, but they are also still of
 class <code>steps_xyt</code>.</p>
 <pre class="r"><code>class(obs_avail)</code></pre>
-<pre><code>## [1] &quot;random_steps&quot; &quot;steps_xyt&quot;    &quot;steps_xy&quot;     &quot;tbl_df&quot;       &quot;tbl&quot;         
-## [6] &quot;data.frame&quot;</code></pre>
+<pre><code>## [1] &quot;random_steps&quot; &quot;steps_xyt&quot;    &quot;steps_xy&quot;     &quot;tbl_df&quot;      
+## [5] &quot;tbl&quot;          &quot;data.frame&quot;</code></pre>
 <p>Take a look: View(obs_avail)</p>
 <p>Each observed step gets an identifying number
 (<code>step_id_</code>), and all of the paired available steps get that
@@ -1758,85 +1764,103 @@ response variable in our conditional logistic regression.</p>
 attached to the object as attributes.</p>
 <pre class="r"><code>attributes(obs_avail)</code></pre>
 <pre><code>## $class
-## [1] &quot;random_steps&quot; &quot;steps_xyt&quot;    &quot;steps_xy&quot;     &quot;tbl_df&quot;       &quot;tbl&quot;         
-## [6] &quot;data.frame&quot;  
+## [1] &quot;random_steps&quot; &quot;steps_xyt&quot;    &quot;steps_xy&quot;     &quot;tbl_df&quot;      
+## [5] &quot;tbl&quot;          &quot;data.frame&quot;  
 ## 
 ## $row.names
-##    [1]    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15
-##   [16]   16   17   18   19   20   21   22   23   24   25   26   27   28   29   30
-##   [31]   31   32   33   34   35   36   37   38   39   40   41   42   43   44   45
-##   [46]   46   47   48   49   50   51   52   53   54   55   56   57   58   59   60
-##   [61]   61   62   63   64   65   66   67   68   69   70   71   72   73   74   75
-##   [76]   76   77   78   79   80   81   82   83   84   85   86   87   88   89   90
-##   [91]   91   92   93   94   95   96   97   98   99  100  101  102  103  104  105
-##  [106]  106  107  108  109  110  111  112  113  114  115  116  117  118  119  120
-##  [121]  121  122  123  124  125  126  127  128  129  130  131  132  133  134  135
-##  [136]  136  137  138  139  140  141  142  143  144  145  146  147  148  149  150
-##  [151]  151  152  153  154  155  156  157  158  159  160  161  162  163  164  165
-##  [166]  166  167  168  169  170  171  172  173  174  175  176  177  178  179  180
-##  [181]  181  182  183  184  185  186  187  188  189  190  191  192  193  194  195
-##  [196]  196  197  198  199  200  201  202  203  204  205  206  207  208  209  210
-##  [211]  211  212  213  214  215  216  217  218  219  220  221  222  223  224  225
-##  [226]  226  227  228  229  230  231  232  233  234  235  236  237  238  239  240
-##  [241]  241  242  243  244  245  246  247  248  249  250  251  252  253  254  255
-##  [256]  256  257  258  259  260  261  262  263  264  265  266  267  268  269  270
-##  [271]  271  272  273  274  275  276  277  278  279  280  281  282  283  284  285
-##  [286]  286  287  288  289  290  291  292  293  294  295  296  297  298  299  300
-##  [301]  301  302  303  304  305  306  307  308  309  310  311  312  313  314  315
-##  [316]  316  317  318  319  320  321  322  323  324  325  326  327  328  329  330
-##  [331]  331  332  333  334  335  336  337  338  339  340  341  342  343  344  345
-##  [346]  346  347  348  349  350  351  352  353  354  355  356  357  358  359  360
-##  [361]  361  362  363  364  365  366  367  368  369  370  371  372  373  374  375
-##  [376]  376  377  378  379  380  381  382  383  384  385  386  387  388  389  390
-##  [391]  391  392  393  394  395  396  397  398  399  400  401  402  403  404  405
-##  [406]  406  407  408  409  410  411  412  413  414  415  416  417  418  419  420
-##  [421]  421  422  423  424  425  426  427  428  429  430  431  432  433  434  435
-##  [436]  436  437  438  439  440  441  442  443  444  445  446  447  448  449  450
-##  [451]  451  452  453  454  455  456  457  458  459  460  461  462  463  464  465
-##  [466]  466  467  468  469  470  471  472  473  474  475  476  477  478  479  480
-##  [481]  481  482  483  484  485  486  487  488  489  490  491  492  493  494  495
-##  [496]  496  497  498  499  500  501  502  503  504  505  506  507  508  509  510
-##  [511]  511  512  513  514  515  516  517  518  519  520  521  522  523  524  525
-##  [526]  526  527  528  529  530  531  532  533  534  535  536  537  538  539  540
-##  [541]  541  542  543  544  545  546  547  548  549  550  551  552  553  554  555
-##  [556]  556  557  558  559  560  561  562  563  564  565  566  567  568  569  570
-##  [571]  571  572  573  574  575  576  577  578  579  580  581  582  583  584  585
-##  [586]  586  587  588  589  590  591  592  593  594  595  596  597  598  599  600
-##  [601]  601  602  603  604  605  606  607  608  609  610  611  612  613  614  615
-##  [616]  616  617  618  619  620  621  622  623  624  625  626  627  628  629  630
-##  [631]  631  632  633  634  635  636  637  638  639  640  641  642  643  644  645
-##  [646]  646  647  648  649  650  651  652  653  654  655  656  657  658  659  660
-##  [661]  661  662  663  664  665  666  667  668  669  670  671  672  673  674  675
-##  [676]  676  677  678  679  680  681  682  683  684  685  686  687  688  689  690
-##  [691]  691  692  693  694  695  696  697  698  699  700  701  702  703  704  705
-##  [706]  706  707  708  709  710  711  712  713  714  715  716  717  718  719  720
-##  [721]  721  722  723  724  725  726  727  728  729  730  731  732  733  734  735
-##  [736]  736  737  738  739  740  741  742  743  744  745  746  747  748  749  750
-##  [751]  751  752  753  754  755  756  757  758  759  760  761  762  763  764  765
-##  [766]  766  767  768  769  770  771  772  773  774  775  776  777  778  779  780
-##  [781]  781  782  783  784  785  786  787  788  789  790  791  792  793  794  795
-##  [796]  796  797  798  799  800  801  802  803  804  805  806  807  808  809  810
-##  [811]  811  812  813  814  815  816  817  818  819  820  821  822  823  824  825
-##  [826]  826  827  828  829  830  831  832  833  834  835  836  837  838  839  840
-##  [841]  841  842  843  844  845  846  847  848  849  850  851  852  853  854  855
-##  [856]  856  857  858  859  860  861  862  863  864  865  866  867  868  869  870
-##  [871]  871  872  873  874  875  876  877  878  879  880  881  882  883  884  885
-##  [886]  886  887  888  889  890  891  892  893  894  895  896  897  898  899  900
-##  [901]  901  902  903  904  905  906  907  908  909  910  911  912  913  914  915
-##  [916]  916  917  918  919  920  921  922  923  924  925  926  927  928  929  930
-##  [931]  931  932  933  934  935  936  937  938  939  940  941  942  943  944  945
-##  [946]  946  947  948  949  950  951  952  953  954  955  956  957  958  959  960
-##  [961]  961  962  963  964  965  966  967  968  969  970  971  972  973  974  975
-##  [976]  976  977  978  979  980  981  982  983  984  985  986  987  988  989  990
-##  [991]  991  992  993  994  995  996  997  998  999 1000
+##    [1]    1    2    3    4    5    6    7    8    9   10   11   12
+##   [13]   13   14   15   16   17   18   19   20   21   22   23   24
+##   [25]   25   26   27   28   29   30   31   32   33   34   35   36
+##   [37]   37   38   39   40   41   42   43   44   45   46   47   48
+##   [49]   49   50   51   52   53   54   55   56   57   58   59   60
+##   [61]   61   62   63   64   65   66   67   68   69   70   71   72
+##   [73]   73   74   75   76   77   78   79   80   81   82   83   84
+##   [85]   85   86   87   88   89   90   91   92   93   94   95   96
+##   [97]   97   98   99  100  101  102  103  104  105  106  107  108
+##  [109]  109  110  111  112  113  114  115  116  117  118  119  120
+##  [121]  121  122  123  124  125  126  127  128  129  130  131  132
+##  [133]  133  134  135  136  137  138  139  140  141  142  143  144
+##  [145]  145  146  147  148  149  150  151  152  153  154  155  156
+##  [157]  157  158  159  160  161  162  163  164  165  166  167  168
+##  [169]  169  170  171  172  173  174  175  176  177  178  179  180
+##  [181]  181  182  183  184  185  186  187  188  189  190  191  192
+##  [193]  193  194  195  196  197  198  199  200  201  202  203  204
+##  [205]  205  206  207  208  209  210  211  212  213  214  215  216
+##  [217]  217  218  219  220  221  222  223  224  225  226  227  228
+##  [229]  229  230  231  232  233  234  235  236  237  238  239  240
+##  [241]  241  242  243  244  245  246  247  248  249  250  251  252
+##  [253]  253  254  255  256  257  258  259  260  261  262  263  264
+##  [265]  265  266  267  268  269  270  271  272  273  274  275  276
+##  [277]  277  278  279  280  281  282  283  284  285  286  287  288
+##  [289]  289  290  291  292  293  294  295  296  297  298  299  300
+##  [301]  301  302  303  304  305  306  307  308  309  310  311  312
+##  [313]  313  314  315  316  317  318  319  320  321  322  323  324
+##  [325]  325  326  327  328  329  330  331  332  333  334  335  336
+##  [337]  337  338  339  340  341  342  343  344  345  346  347  348
+##  [349]  349  350  351  352  353  354  355  356  357  358  359  360
+##  [361]  361  362  363  364  365  366  367  368  369  370  371  372
+##  [373]  373  374  375  376  377  378  379  380  381  382  383  384
+##  [385]  385  386  387  388  389  390  391  392  393  394  395  396
+##  [397]  397  398  399  400  401  402  403  404  405  406  407  408
+##  [409]  409  410  411  412  413  414  415  416  417  418  419  420
+##  [421]  421  422  423  424  425  426  427  428  429  430  431  432
+##  [433]  433  434  435  436  437  438  439  440  441  442  443  444
+##  [445]  445  446  447  448  449  450  451  452  453  454  455  456
+##  [457]  457  458  459  460  461  462  463  464  465  466  467  468
+##  [469]  469  470  471  472  473  474  475  476  477  478  479  480
+##  [481]  481  482  483  484  485  486  487  488  489  490  491  492
+##  [493]  493  494  495  496  497  498  499  500  501  502  503  504
+##  [505]  505  506  507  508  509  510  511  512  513  514  515  516
+##  [517]  517  518  519  520  521  522  523  524  525  526  527  528
+##  [529]  529  530  531  532  533  534  535  536  537  538  539  540
+##  [541]  541  542  543  544  545  546  547  548  549  550  551  552
+##  [553]  553  554  555  556  557  558  559  560  561  562  563  564
+##  [565]  565  566  567  568  569  570  571  572  573  574  575  576
+##  [577]  577  578  579  580  581  582  583  584  585  586  587  588
+##  [589]  589  590  591  592  593  594  595  596  597  598  599  600
+##  [601]  601  602  603  604  605  606  607  608  609  610  611  612
+##  [613]  613  614  615  616  617  618  619  620  621  622  623  624
+##  [625]  625  626  627  628  629  630  631  632  633  634  635  636
+##  [637]  637  638  639  640  641  642  643  644  645  646  647  648
+##  [649]  649  650  651  652  653  654  655  656  657  658  659  660
+##  [661]  661  662  663  664  665  666  667  668  669  670  671  672
+##  [673]  673  674  675  676  677  678  679  680  681  682  683  684
+##  [685]  685  686  687  688  689  690  691  692  693  694  695  696
+##  [697]  697  698  699  700  701  702  703  704  705  706  707  708
+##  [709]  709  710  711  712  713  714  715  716  717  718  719  720
+##  [721]  721  722  723  724  725  726  727  728  729  730  731  732
+##  [733]  733  734  735  736  737  738  739  740  741  742  743  744
+##  [745]  745  746  747  748  749  750  751  752  753  754  755  756
+##  [757]  757  758  759  760  761  762  763  764  765  766  767  768
+##  [769]  769  770  771  772  773  774  775  776  777  778  779  780
+##  [781]  781  782  783  784  785  786  787  788  789  790  791  792
+##  [793]  793  794  795  796  797  798  799  800  801  802  803  804
+##  [805]  805  806  807  808  809  810  811  812  813  814  815  816
+##  [817]  817  818  819  820  821  822  823  824  825  826  827  828
+##  [829]  829  830  831  832  833  834  835  836  837  838  839  840
+##  [841]  841  842  843  844  845  846  847  848  849  850  851  852
+##  [853]  853  854  855  856  857  858  859  860  861  862  863  864
+##  [865]  865  866  867  868  869  870  871  872  873  874  875  876
+##  [877]  877  878  879  880  881  882  883  884  885  886  887  888
+##  [889]  889  890  891  892  893  894  895  896  897  898  899  900
+##  [901]  901  902  903  904  905  906  907  908  909  910  911  912
+##  [913]  913  914  915  916  917  918  919  920  921  922  923  924
+##  [925]  925  926  927  928  929  930  931  932  933  934  935  936
+##  [937]  937  938  939  940  941  942  943  944  945  946  947  948
+##  [949]  949  950  951  952  953  954  955  956  957  958  959  960
+##  [961]  961  962  963  964  965  966  967  968  969  970  971  972
+##  [973]  973  974  975  976  977  978  979  980  981  982  983  984
+##  [985]  985  986  987  988  989  990  991  992  993  994  995  996
+##  [997]  997  998  999 1000
 ##  [ reached getOption(&quot;max.print&quot;) -- omitted 36947 entries ]
 ## 
 ## $names
-##  [1] &quot;burst_&quot;   &quot;x1_&quot;      &quot;x2_&quot;      &quot;y1_&quot;      &quot;y2_&quot;      &quot;sl_&quot;      &quot;ta_&quot;     
-##  [8] &quot;t1_&quot;      &quot;t2_&quot;      &quot;dt_&quot;      &quot;case_&quot;    &quot;step_id_&quot;
+##  [1] &quot;burst_&quot;   &quot;x1_&quot;      &quot;x2_&quot;      &quot;y1_&quot;      &quot;y2_&quot;     
+##  [6] &quot;sl_&quot;      &quot;ta_&quot;      &quot;t1_&quot;      &quot;t2_&quot;      &quot;dt_&quot;     
+## [11] &quot;case_&quot;    &quot;step_id_&quot;
 ## 
 ## $.internal.selfref
-## &lt;pointer: 0x0000022033608890&gt;
+## &lt;pointer: 0x0000019299f7de80&gt;
 ## 
 ## $sl_
 ## $name
@@ -1882,7 +1906,8 @@ attached to the object as attributes.</p>
 ## [1,] 0.03329244
 ## 
 ## attr(,&quot;class&quot;)
-## [1] &quot;vonmises_distr&quot; &quot;ta_distr&quot;       &quot;amt_distr&quot;      &quot;list&quot;          
+## [1] &quot;vonmises_distr&quot; &quot;ta_distr&quot;       &quot;amt_distr&quot;     
+## [4] &quot;list&quot;          
 ## 
 ## $n_control_
 ## [1] 20
@@ -1981,7 +2006,8 @@ attached to the object as attributes.</p>
 ## [1,] 0.03329244
 ## 
 ## attr(,&quot;class&quot;)
-## [1] &quot;vonmises_distr&quot; &quot;ta_distr&quot;       &quot;amt_distr&quot;      &quot;list&quot;</code></pre>
+## [1] &quot;vonmises_distr&quot; &quot;ta_distr&quot;       &quot;amt_distr&quot;     
+## [4] &quot;list&quot;</code></pre>
 <p>Since we used the gamma distribution as our tentative step-length
 distribution, we will want to include step length and log(step length)
 in our iSSF. Doing so will:</p>
@@ -2001,27 +2027,24 @@ distribution, we need to include cos(turn angle) in our iSSF.</p>
 environmental covariates to each one. We can use the functions
 ‘extract_covariates()’ to attach the raster values to our steps.</p>
 <pre class="r"><code>covs &lt;- extract_covariates(obs_avail, hab)</code></pre>
-<p>Format “cover” as factor</p>
-<pre class="r"><code>covs$cover &lt;- factor(covs$cover,
-                     labels = c(&quot;grassland&quot;, &quot;forest&quot;, &quot;wetland&quot;))</code></pre>
 <p>Have a look:</p>
 <pre class="r"><code>print(covs, n = 3, width = 200)</code></pre>
 <pre><code>## # A tibble: 37,947 × 19
-##   burst_    x1_     x2_     y1_      y2_   sl_    ta_ t1_                
-##    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dttm&gt;             
-## 1      1 446975 446705. 4626025 4626378.  445.  0.652 2021-02-15 01:00:00
-## 2      1 446975 447350. 4626025 4626641.  722. -0.546 2021-02-15 01:00:00
-## 3      1 446975 446467. 4626025 4626261.  560.  1.14  2021-02-15 01:00:00
-##   t2_                 dt_     case_ step_id_ forage  temp  pred cover    
-##   &lt;dttm&gt;              &lt;drtn&gt;  &lt;lgl&gt;    &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;    
-## 1 2021-02-15 02:00:00 1 hours TRUE         2   600.  19.1 1.02  grassland
-## 2 2021-02-15 02:00:00 1 hours FALSE        2   447.  19.8 8.74  grassland
-## 3 2021-02-15 02:00:00 1 hours FALSE        2   636.  19.6 0.845 wetland  
-##   dist_to_water dist_to_cent  rand
-##           &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;
-## 1           100         541.     0
-## 2           100         783.     1
-## 3             0         626.    -1
+##   burst_    x1_     x2_     y1_      y2_   sl_    ta_
+##    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1      1 446975 446705. 4626025 4626378.  445.  0.652
+## 2      1 446975 447350. 4626025 4626641.  722. -0.546
+## 3      1 446975 446467. 4626025 4626261.  560.  1.14 
+##   t1_                 t2_                 dt_     case_ step_id_
+##   &lt;dttm&gt;              &lt;dttm&gt;              &lt;drtn&gt;  &lt;lgl&gt;    &lt;int&gt;
+## 1 2021-02-15 01:00:00 2021-02-15 02:00:00 1 hours TRUE         2
+## 2 2021-02-15 01:00:00 2021-02-15 02:00:00 1 hours FALSE        2
+## 3 2021-02-15 01:00:00 2021-02-15 02:00:00 1 hours FALSE        2
+##   forage  temp  pred cover   dist_to_water dist_to_cent  rand
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;           &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;
+## 1   600.  19.1 1.02  grass             100         541.     0
+## 2   447.  19.8 8.74  grass             100         783.     1
+## 3   636.  19.6 0.845 wetland             0         626.    -1
 ## # … with 37,944 more rows</code></pre>
 <p>One of the great strengths of iSSA is that it can handle temporal
 variation. Perhaps our organism selects habitat differently between day
@@ -2036,21 +2059,26 @@ of day for <em>both</em> the start of the step and the end of the
 step.</p>
 <pre class="r"><code>print(covs2, n = 3, width = 200)</code></pre>
 <pre><code>## # A tibble: 37,947 × 21
-##   burst_    x1_     x2_     y1_      y2_   sl_    ta_ t1_                
-##    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dttm&gt;             
-## 1      1 446975 446705. 4626025 4626378.  445.  0.652 2021-02-15 01:00:00
-## 2      1 446975 447350. 4626025 4626641.  722. -0.546 2021-02-15 01:00:00
-## 3      1 446975 446467. 4626025 4626261.  560.  1.14  2021-02-15 01:00:00
-##   t2_                 dt_     case_ step_id_ forage  temp  pred cover    
-##   &lt;dttm&gt;              &lt;drtn&gt;  &lt;lgl&gt;    &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;    
-## 1 2021-02-15 02:00:00 1 hours TRUE         2   600.  19.1 1.02  grassland
-## 2 2021-02-15 02:00:00 1 hours FALSE        2   447.  19.8 8.74  grassland
-## 3 2021-02-15 02:00:00 1 hours FALSE        2   636.  19.6 0.845 wetland  
-##   dist_to_water dist_to_cent  rand tod_start_ tod_end_
-##           &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;      &lt;fct&gt;   
-## 1           100         541.     0 night      night   
-## 2           100         783.     1 night      night   
-## 3             0         626.    -1 night      night   
+##   burst_    x1_     x2_     y1_      y2_   sl_    ta_
+##    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1      1 446975 446705. 4626025 4626378.  445.  0.652
+## 2      1 446975 447350. 4626025 4626641.  722. -0.546
+## 3      1 446975 446467. 4626025 4626261.  560.  1.14 
+##   t1_                 t2_                 dt_     case_ step_id_
+##   &lt;dttm&gt;              &lt;dttm&gt;              &lt;drtn&gt;  &lt;lgl&gt;    &lt;int&gt;
+## 1 2021-02-15 01:00:00 2021-02-15 02:00:00 1 hours TRUE         2
+## 2 2021-02-15 01:00:00 2021-02-15 02:00:00 1 hours FALSE        2
+## 3 2021-02-15 01:00:00 2021-02-15 02:00:00 1 hours FALSE        2
+##   forage  temp  pred cover   dist_to_water dist_to_cent  rand
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;           &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;
+## 1   600.  19.1 1.02  grass             100         541.     0
+## 2   447.  19.8 8.74  grass             100         783.     1
+## 3   636.  19.6 0.845 wetland             0         626.    -1
+##   tod_start_ tod_end_
+##   &lt;fct&gt;      &lt;fct&gt;   
+## 1 night      night   
+## 2 night      night   
+## 3 night      night   
 ## # … with 37,944 more rows</code></pre>
 <p>Now we’re ready to fit a model!</p>
 </div>
@@ -2086,11 +2114,19 @@ m1 &lt;- fit_issf(covs2,
 ##   ..- attr(*, &quot;class&quot;)= chr [1:4] &quot;vonmises_distr&quot; &quot;ta_distr&quot; &quot;amt_distr&quot; &quot;list&quot;
 ##  $ more : NULL
 ##  - attr(*, &quot;class&quot;)= chr [1:2] &quot;fit_clogit&quot; &quot;list&quot;</code></pre>
-<p>Notice that it is a list with 4 elements at the top level. - $model:
-the actual fitted model - $sl_: the tentative step-length distribution -
-$ta_: the tentative turn-angle distribution - $more: (currently empty) a
-placeholder for additional information … model interpretation —- Take a
-look at the model summary:</p>
+<p>Notice that it is a list with 4 elements at the top level.</p>
+<ul>
+<li>$model: the actual fitted model</li>
+<li>$sl_: the tentative step-length distribution<br />
+</li>
+<li>$ta_: the tentative turn-angle distribution</li>
+<li>$more: (currently empty) a placeholder for additional
+information</li>
+</ul>
+</div>
+<div id="model-interpretation" class="section level3">
+<h3>Model interpretation</h3>
+<p>Take a look at the model summary:</p>
 <pre class="r"><code>summary(m1)</code></pre>
 <pre><code>## Call:
 ## coxph(formula = Surv(rep(1, 37947L), case_) ~ forage + pred + 
@@ -2128,10 +2164,11 @@ look at the model summary:</p>
 estimated selection-free movement kernel (none of the sl_ params are
 significant.)</li>
 <li>our tentative turn-angle distribution is different from the
-estimated selection-free movement kernel (cos(ta_) param is significant)
-With this simple model structure, we have an ‘amt’ function that will
-automatically update the movement distributions.</li>
+estimated selection-free movement kernel (cos(ta_) param is
+significant)</li>
 </ol>
+<p>With this simple model structure, we have an ‘amt’ function that will
+automatically update the movement distributions.</p>
 </div>
 <div id="updating-movement-parameters" class="section level3">
 <h3>Updating movement parameters</h3>
@@ -2225,7 +2262,8 @@ distribution</p>
 ## [1,] 0.03329244
 ## 
 ## attr(,&quot;class&quot;)
-## [1] &quot;vonmises_distr&quot; &quot;ta_distr&quot;       &quot;amt_distr&quot;      &quot;list&quot;</code></pre>
+## [1] &quot;vonmises_distr&quot; &quot;ta_distr&quot;       &quot;amt_distr&quot;     
+## [4] &quot;list&quot;</code></pre>
 <p>Updated selection-free turn-angle distribution</p>
 <pre class="r"><code>(upd_ta &lt;- update_ta_distr(m1, beta_cos_ta = &quot;cos(ta_)&quot;))</code></pre>
 <pre><code>## $name
@@ -2250,7 +2288,8 @@ distribution</p>
 ## NULL
 ## 
 ## attr(,&quot;class&quot;)
-## [1] &quot;vonmises_distr&quot; &quot;ta_distr&quot;       &quot;amt_distr&quot;      &quot;list&quot;</code></pre>
+## [1] &quot;vonmises_distr&quot; &quot;ta_distr&quot;       &quot;amt_distr&quot;     
+## [4] &quot;list&quot;</code></pre>
 <p>Compile the parameters into a data.frame for plotting with ggplot</p>
 <pre class="r"><code>tent_df_ta &lt;- data.frame(dist = &quot;tent&quot;,
                          mu = tent_ta$params$mu,
@@ -2300,7 +2339,8 @@ estimated kappa by -1 and change mu to pi.</p>
 ##   zero: 0
 ##   rotation: &#39;counter&#39;
 ## conversion.circularxradians0counter
-## ℹ Run ]8;;ide:run:dplyr::last_dplyr_warnings()dplyr::last_dplyr_warnings()]8;; to see the 199 remaining warnings.</code></pre>
+## ℹ Run ]8;;ide:run:dplyr::last_dplyr_warnings()dplyr::last_dplyr_warnings()]8;; to see the 199 remaining
+##   warnings.</code></pre>
 <p><img src="data:image/png;base64,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" width="672" /></p>
 <p>As we expected, we see a difference here.</p>
 </div>
@@ -2330,7 +2370,7 @@ logRSS &lt;- log_rss(m1, x1 = x1, x2 = x2, ci = &quot;se&quot;)</code></pre>
 <pre class="r"><code>exp(logRSS$df[, c(&quot;log_rss&quot;, &quot;lwr&quot;, &quot;upr&quot;)])</code></pre>
 <pre><code>##    log_rss      lwr      upr
 ## 1 1.126023 1.033639 1.226664</code></pre>
-<p>Our animal is ~ 1.5x more likely to step into a habitat with forage =
+<p>Our animal is ~ 1.1 more likely to step into a habitat with forage =
 600 than forage = 400.</p>
 </div>
 <div id="scenario-2" class="section level4">
@@ -2351,7 +2391,7 @@ x2 &lt;- data.frame(forage = 600, pred = 5,
 <p>Confidence interval</p>
 <pre class="r"><code>exp(c(logRSS$df$lwr, logRSS$df$upr))</code></pre>
 <pre><code>## [1] 5.492570 8.303117</code></pre>
-<p>Our animal is about 7.3x more likely to step into a habitat with
+<p>Our animal is about6.8 more likely to step into a habitat with
 predator = 0 than predator = 5. The 95% CI for that estimate is ~ 5.9 –
 9.0.</p>
 </div>
