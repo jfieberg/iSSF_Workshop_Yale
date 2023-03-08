@@ -20,9 +20,6 @@ library(dplyr)
 library(ggplot2)
 library(lubridate)
 
-#' Other packages required but not attached:
-#'   - maptools
-
 #' Load GPS data (Demo data included in 'amt')
 gps <- uhc_issf_locs
 
