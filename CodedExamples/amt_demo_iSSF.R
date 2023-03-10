@@ -20,8 +20,6 @@ library(dplyr)
 library(ggplot2)
 library(lubridate)
 
-#' Other packages required but not attached:
-#'   - maptools
 
 #' Load GPS data (Demo data included in 'amt')
 gps <- uhc_issf_locs
@@ -46,7 +44,7 @@ plot(hab)
 #' timestamps are also possible (`track_xy`).
 
 #' We can format our data as a `track_*` object using `make_track()`.
-trk <- make_track(gps, x, y, t, crs = 32612)
+trk <- make_track(gps, .x = x, .y = y, t. = t, crs = 32612)
 
 #' We can see the class of the resulting object
 class(trk)
